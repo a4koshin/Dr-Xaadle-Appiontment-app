@@ -1,0 +1,12 @@
+model BlockedSlot {
+  id         String   @id @default(uuid())
+  doctorId    String
+  date        DateTime
+  startTime   String
+  endTime     String
+  reason      String?
+
+  doctor      DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+}
