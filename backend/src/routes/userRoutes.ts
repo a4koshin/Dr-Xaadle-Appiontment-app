@@ -2,11 +2,12 @@ import { Router } from "express";
 import { userController } from "../controllers/userController";
 import { authMiddleware } from "../middlewares/authMiddleware";
 import { roleMiddleware } from "../middlewares/roleMiddleware";
+import { authRateLimit } from "../middlewares/rateLimitMiddleware";
 
 const router = Router();
 
 router.post("/register", userController.register);
-router.post("/login", userController.login);
+router.post("/login", authRateLimit, userController.login);
 router.post("/logout", userController.logout);
 
 router.get("/profile", authMiddleware, userController.getProfile);
