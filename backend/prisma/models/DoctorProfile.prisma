@@ -1,0 +1,17 @@
+model DoctorProfile {
+  id               String   @id @default(uuid())
+  fullName         String
+  specialization   String
+  bio              String
+  experience       Int
+  consultationFee  Decimal  @db.Decimal(10, 2)
+  phone            String   @unique
+  image            String?
+
+  appointments     Appointment[]
+  availabilities   DoctorAvailability[]
+  blockedSlots     BlockedSlot[]
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
