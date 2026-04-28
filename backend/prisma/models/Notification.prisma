@@ -1,0 +1,19 @@
+model Notification {
+    id      String           @id @default(uuid())
+    userId  String
+    title   String
+    message String
+    type    NotificationType
+    isRead  Boolean          @default(false)
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+}
+
+enum NotificationType {
+    BOOKING
+    PAYMENT
+    REMINDER
+    SYSTEM
+}
