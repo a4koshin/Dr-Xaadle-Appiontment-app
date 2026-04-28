@@ -1,0 +1,26 @@
+model User {
+    id       String     @id @default(uuid())
+    fullName String
+    phone    String     @unique
+    email    String?    @unique
+    password String
+    role     UserRole   @default(PATIENT)
+    status   UserStatus @default(ACTIVE)
+
+    appointments  Appointment[]
+    payments      Payment[]
+    notifications Notification[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+    ADMIN
+    PATIENT
+}
+
+enum UserStatus {
+    ACTIVE
+    DELETED
+}
