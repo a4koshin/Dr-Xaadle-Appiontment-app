@@ -1,7 +1,8 @@
 import prisma from "../config/prisma";
 import { hashPassword, comparePassword } from "../lib/password";
 import { generateToken } from "../lib/jwt";
-import { sendResetCodeEmail } from "../lib/email";
+
+import { sendResetCodeEmail, sendWelcomeEmail } from "../lib/email";
 
 type RegisterInput = {
   fullName: string;
@@ -55,6 +56,10 @@ export const userService = {
       id: user.id,
       role: user.role,
     });
+
+    if (user.email) {
+      await sendWelcomeEmail(user.email, user.fullName);
+    }
 
     return { user, token };
   },
