@@ -82,6 +82,56 @@ export const userController = {
     }
   },
 
+  getUserById: async (req: Request, res: Response) => {
+    try {
+      const user = await userService.getUserById(req.params.id);
+
+      return res.status(200).json({
+        success: true,
+        data: user,
+      });
+    } catch (error: any) {
+      return res.status(404).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+
+  updateUser: async (req: Request, res: Response) => {
+    try {
+      const user = await userService.updateUser(req.params.id, req.body);
+
+      return res.status(200).json({
+        success: true,
+        message: "User updated successfully.",
+        data: user,
+      });
+    } catch (error: any) {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+
+  softDeleteUser: async (req: Request, res: Response) => {
+    try {
+      const user = await userService.softDeleteUser(req.params.id);
+
+      return res.status(200).json({
+        success: true,
+        message: "User deleted successfully.",
+        data: user,
+      });
+    } catch (error: any) {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+
   forgotPassword: async (req: Request, res: Response) => {
     try {
       const result = await userService.forgotPassword(req.body.email);
