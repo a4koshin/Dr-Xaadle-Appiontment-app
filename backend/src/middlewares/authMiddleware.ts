@@ -20,7 +20,7 @@ export const authMiddleware = (
 
     const decoded = verifyToken(token) as {
       id: string;
-      role: "ADMIN" | "PATIENT";
+      role: "ADMIN" | "DOCTOR" | "PATIENT";
     };
 
     req.user = decoded;
