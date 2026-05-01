@@ -1,12 +1,12 @@
 model Notification {
-    id      String           @id @default(uuid())
+    id      String             @id @default(uuid())
     userId  String
     title   String
     message String
     type    NotificationType
-    isRead  Boolean          @default(false)
-
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    isRead  Boolean            @default(false)
+    status  NotificationStatus @default(ACTIVE)
+    user    User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
 }
@@ -16,4 +16,9 @@ enum NotificationType {
     PAYMENT
     REMINDER
     SYSTEM
+}
+
+enum NotificationStatus {
+    ACTIVE
+    DELETED
 }
