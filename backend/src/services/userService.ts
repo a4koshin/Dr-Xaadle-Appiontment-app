@@ -120,6 +120,9 @@ export const userService = {
 
   getAllUsers: async () => {
     return prisma.user.findMany({
+      where: {
+        status: "ACTIVE",
+      },
       orderBy: {
         createdAt: "desc",
       },
@@ -131,6 +134,97 @@ export const userService = {
         role: true,
         status: true,
         createdAt: true,
+      },
+    });
+  },
+  getUserById: async (id: string) => {
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        fullName: true,
+        phone: true,
+        email: true,
+        role: true,
+        status: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    if (!user || user.status === "DELETED") {
+      throw new Error("User not found.");
+    }
+
+    return user;
+  },
+
+  updateUser: async (
+    id: string,
+    data: {
+      fullName?: string;
+      phone?: string;
+      email?: string;
+      password?: string;
+      role?: "ADMIN" | "DOCTOR" | "PATIENT";
+      status?: "ACTIVE" | "DELETED";
+    },
+  ) => {
+    const user = await prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!user || user.status === "DELETED") {
+      throw new Error("User not found.");
+    }
+
+    const updateData: any = { ...data };
+
+    if (data.password) {
+      updateData.password = await hashPassword(data.password);
+    }
+
+    return prisma.user.update({
+      where: { id },
+      data: updateData,
+      select: {
+        id: true,
+        fullName: true,
+        phone: true,
+        email: true,
+        role: true,
+        status: true,
+        updatedAt: true,
+      },
+    });
+  },
+
+  softDeleteUser: async (userId: string) => {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    if (user.status === "DELETED") {
+      throw new Error("User is already deleted.");
+    }
+
+    return prisma.user.update({
+      where: { id: userId },
+      data: {
+        status: "DELETED",
+      },
+      select: {
+        id: true,
+        fullName: true,
+        phone: true,
+        email: true,
+        role: true,
+        status: true,
+        updatedAt: true,
       },
     });
   },
