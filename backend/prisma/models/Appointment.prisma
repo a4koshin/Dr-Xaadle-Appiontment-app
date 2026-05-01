@@ -1,16 +1,16 @@
 model Appointment {
-    id              String            @id @default(uuid())
-    patientId       String
-    doctorId        String
-    appointmentDate DateTime
-    startTime       String
-    endTime         String
-    reason          String?
-    status          AppointmentStatus @default(PENDING)
-
-    patient User          @relation(fields: [patientId], references: [id], onDelete: Cascade)
-    doctor  DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
-    payment Payment?
+    id                 String            @id @default(uuid())
+    patientId          String
+    doctorId           String
+    appointmentDate    DateTime
+    startTime          String
+    endTime            String
+    reason             String?
+    appointmentStatus AppointmentStatus @default(PENDING)
+    status             AppointmentDelete @default(ACTIVE)
+    patient            User              @relation(fields: [patientId], references: [id], onDelete: Cascade)
+    doctor             DoctorProfile     @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+    payment            Payment?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -21,4 +21,9 @@ enum AppointmentStatus {
     CONFIRMED
     CANCELLED
     COMPLETED
+}
+
+enum AppointmentDelete {
+    ACTIVE
+    DELETED
 }
