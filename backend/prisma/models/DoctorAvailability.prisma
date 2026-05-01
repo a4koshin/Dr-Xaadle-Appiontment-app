@@ -1,11 +1,12 @@
 model DoctorAvailability {
-    id           String    @id @default(uuid())
+    id           String             @id @default(uuid())
     doctorId     String
     dayOfWeek    DayOfWeek
     startTime    String
     endTime      String
     slotDuration Int
-    isActive     Boolean   @default(true)
+    status       Doctor_Availability @default(ACTIVE)
+    isActive     Boolean            @default(true)
 
     doctor DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
 
@@ -21,4 +22,9 @@ enum DayOfWeek {
     WEDNESDAY
     THURSDAY
     FRIDAY
+}
+
+enum Doctor_Availability {
+    ACTIVE
+    DELETED
 }
