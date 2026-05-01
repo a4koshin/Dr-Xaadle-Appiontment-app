@@ -1,12 +1,18 @@
 model BlockedSlot {
-  id         String   @id @default(uuid())
-  doctorId    String
-  date        DateTime
-  startTime   String
-  endTime     String
-  reason      String?
+  id        String            @id @default(uuid())
+  doctorId  String
+  date      DateTime
+  startTime String
+  endTime   String
+  reason    String?
+  status    BlockedSlotStatus @default(ACTIVE)
 
-  doctor      DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  doctor DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
 
-  createdAt   DateTime @default(now())
+  createdAt DateTime @default(now())
+}
+
+enum BlockedSlotStatus {
+  ACTIVE
+  DELETED
 }
