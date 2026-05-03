@@ -4,7 +4,9 @@ import { availabilityService } from "../services/availabilityService";
 export const availabilityController = {
   createAvailability: async (req: Request, res: Response) => {
     try {
-      const availability = await availabilityService.createAvailability(req.body);
+      const availability = await availabilityService.createAvailability(
+        req.body,
+      );
 
       return res.status(201).json({
         success: true,
@@ -38,8 +40,8 @@ export const availabilityController = {
   updateAvailability: async (req: Request, res: Response) => {
     try {
       const availability = await availabilityService.updateAvailability(
-        req.params.id,
-        req.body
+        req.params.id as string,
+        req.body,
       );
 
       return res.status(200).json({
