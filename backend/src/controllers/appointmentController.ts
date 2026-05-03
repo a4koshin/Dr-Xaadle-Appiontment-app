@@ -37,7 +37,9 @@ export const appointmentController = {
 
   getAppointmentById: async (req: Request, res: Response) => {
     try {
-      const appointment = await appointmentService.getAppointmentById(req.params.id);
+      const appointment = await appointmentService.getAppointmentById(
+        req.params.id as string,
+      );
 
       return res.status(200).json({
         success: true,
@@ -55,7 +57,7 @@ export const appointmentController = {
     try {
       const appointment = await appointmentService.updateAppointmentStatus(
         req.params.id,
-        req.body.appointmentStatus
+        req.body.appointmentStatus,
       );
 
       return res.status(200).json({
@@ -73,7 +75,9 @@ export const appointmentController = {
 
   softDeleteAppointment: async (req: Request, res: Response) => {
     try {
-      const appointment = await appointmentService.softDeleteAppointment(req.params.id);
+      const appointment = await appointmentService.softDeleteAppointment(
+        req.params.id,
+      );
 
       return res.status(200).json({
         success: true,
