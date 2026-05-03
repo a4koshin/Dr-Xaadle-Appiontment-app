@@ -31,7 +31,9 @@ export const paymentController = {
 
   getPaymentById: async (req: Request, res: Response) => {
     try {
-      const payment = await paymentService.getPaymentById(req.params.id);
+      const payment = await paymentService.getPaymentById(
+        req.params.id as string,
+      );
 
       return res.status(200).json({
         success: true,
@@ -45,8 +47,8 @@ export const paymentController = {
   updatePaymentStatus: async (req: Request, res: Response) => {
     try {
       const payment = await paymentService.updatePaymentStatus(
-        req.params.id,
-        req.body.status
+        req.params.id as string,
+        req.body,
       );
 
       return res.status(200).json({
@@ -61,7 +63,9 @@ export const paymentController = {
 
   softDeletePayment: async (req: Request, res: Response) => {
     try {
-      const payment = await paymentService.softDeletePayment(req.params.id);
+      const payment = await paymentService.softDeletePayment(
+        req.params.id as string,
+      );
 
       return res.status(200).json({
         success: true,
