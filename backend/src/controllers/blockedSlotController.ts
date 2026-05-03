@@ -37,7 +37,7 @@ export const blockedSlotController = {
 
   getBlockedSlotById: async (req: Request, res: Response) => {
     try {
-      const blockedSlot = await blockedSlotService.getBlockedSlotById(req.params.id);
+      const blockedSlot = await blockedSlotService.getBlockedSlotById(req.params.id as string);
 
       return res.status(200).json({
         success: true,
@@ -54,7 +54,7 @@ export const blockedSlotController = {
   updateBlockedSlot: async (req: Request, res: Response) => {
     try {
       const blockedSlot = await blockedSlotService.updateBlockedSlot(
-        req.params.id,
+        req.params.id as string,
         req.body
       );
 
@@ -73,7 +73,7 @@ export const blockedSlotController = {
 
   softDeleteBlockedSlot: async (req: Request, res: Response) => {
     try {
-      const blockedSlot = await blockedSlotService.softDeleteBlockedSlot(req.params.id);
+      const blockedSlot = await blockedSlotService.softDeleteBlockedSlot(req.params.id as string);
 
       return res.status(200).json({
         success: true,
