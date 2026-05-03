@@ -100,7 +100,7 @@ export const userController = {
 
   updateUser: async (req: Request, res: Response) => {
     try {
-      const user = await userService.updateUser(req.params.id, req.body);
+      const user = await userService.updateUser(req.params.id as string, req.body);
 
       return res.status(200).json({
         success: true,
@@ -117,7 +117,7 @@ export const userController = {
 
   softDeleteUser: async (req: Request, res: Response) => {
     try {
-      const user = await userService.softDeleteUser(req.params.id);
+      const user = await userService.softDeleteUser(req.params.id as string);
 
       return res.status(200).json({
         success: true,
