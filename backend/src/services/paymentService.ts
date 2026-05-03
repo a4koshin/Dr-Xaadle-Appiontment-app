@@ -61,7 +61,10 @@ export const paymentService = {
 
   updatePaymentStatus: async (
     id: string,
-    status: "PENDING" | "PAID" | "FAILED" | "REFUNDED"
+    data: {
+      status: "PENDING" | "PAID" | "FAILED" | "REFUNDED";
+      transactionId?: string;
+    },
   ) => {
     const payment = await prisma.payment.findUnique({
       where: { id },
@@ -73,7 +76,10 @@ export const paymentService = {
 
     return prisma.payment.update({
       where: { id },
-      data: { status },
+      data: {
+        status: data.status,
+        transactionId: data.transactionId,
+      },
     });
   },
 
