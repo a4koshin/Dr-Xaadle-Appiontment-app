@@ -41,7 +41,7 @@ export const notificationController = {
 
   markAsRead: async (req: Request, res: Response) => {
     try {
-      const notification = await notificationService.markAsRead(req.params.id);
+      const notification = await notificationService.markAsRead(req.params.id as string);
 
       return res.status(200).json({
         success: true,
@@ -59,7 +59,7 @@ export const notificationController = {
   softDeleteNotification: async (req: Request, res: Response) => {
     try {
       const notification = await notificationService.softDeleteNotification(
-        req.params.id,
+        req.params.id as string,
       );
 
       return res.status(200).json({
